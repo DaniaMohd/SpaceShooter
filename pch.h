@@ -3,8 +3,12 @@
 
 #include <iostream>
 #include <raylib.h>
+#include <vector>
+#include <string>
+#include <array>
+#include <memory>
+#include <bitset>
 
-using Entity = uint32_t;
-using Signature = uint32_t;
+using Signature = std::bitset<32>;
 
 #endif /* PCH_H */
