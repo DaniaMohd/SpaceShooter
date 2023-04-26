@@ -19,7 +19,14 @@ int main()
     tf.position.z = 1.3;
     tf.position.r = 10;
 
+    GameObject object;
+    object.AddComponent<MyTransform>(tf);
 
+    GameObject *clone = object.Clone();
+
+    std::cout << object.GetComponent<MyTransform>().position.x << '\n';
+    std::cout << clone->GetComponent<MyTransform>().position.x << '\n';
+    std::cout << object.GetComponent<RigidBody>().velocity << '\n';
 
     while (WindowShouldClose() == false)
     {
