@@ -34,7 +34,8 @@ struct MyTransform : public TComponent<MyTransform>
 
 struct RigidBody : public TComponent<RigidBody>
 {
-    float velocity;
+    std::string name = "InitRigidBody";
+    Vector velocity;
 };
 
 struct GameObject

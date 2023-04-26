@@ -19,14 +19,40 @@ int main()
     tf.position.z = 1.3;
     tf.position.r = 10;
 
-    GameObject object;
-    object.AddComponent<MyTransform>(tf);
+    RigidBody rb;
+    rb.name = "FirstGameObject";
 
-    GameObject *clone = object.Clone();
+    GameObject* object = new GameObject();
+    object->AddComponent<MyTransform>(tf);
+    object->AddComponent<RigidBody>(rb);
 
-    std::cout << object.GetComponent<MyTransform>().position.x << '\n';
+    GameObject *clone = object->Clone();
+
+    std::cout << object->GetComponent<MyTransform>().position.x << '\n';
+    std::cout << object->GetComponent<RigidBody>().name << '\n';
+
+    std::cout << "Cloned Game Object Should Match" << '\n';
+
     std::cout << clone->GetComponent<MyTransform>().position.x << '\n';
-    std::cout << object.GetComponent<RigidBody>().velocity << '\n';
+    std::cout << clone->GetComponent<RigidBody>().name << '\n';
+
+    object->GetComponent<RigidBody>().name = "Chenged!";
+
+    std::cout << "Original Object chaned: \n";
+    
+    std::cout << object->GetComponent<MyTransform>().position.x << '\n';
+    std::cout << object->GetComponent<RigidBody>().name << '\n';
+
+    std::cout << "Cloned Game Object Should maintain same cloned data even when original Object changes." << '\n';
+    std::cout << clone->GetComponent<MyTransform>().position.x << '\n';
+    std::cout << clone->GetComponent<RigidBody>().name << '\n';
+
+
+
+
+    
+
+
 
     while (WindowShouldClose() == false)
     {
