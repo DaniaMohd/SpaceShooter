@@ -3,59 +3,7 @@
 
 #include "pch.h"
 #include "GameObjectManager.h"
-
-struct Component
-{
-    // static inline std::unordered_map<std::string, size_t> componentIndexMap;
-
-    virtual ~Component(){};
-    virtual std::shared_ptr<Component> Clone()
-    {
-        return nullptr;
-    };
-    virtual void RegisterComponent()
-    {
-    }
-};
-
-using ComponentPtr = std::shared_ptr<Component>;
-
-template <typename T>
-struct TComponent : Component
-{
-    std::shared_ptr<Component> Clone()
-    {
-        T component = *dynamic_cast<T *>(this);
-        return std::dynamic_pointer_cast<Component>(std::make_shared<T>(component));
-    }
-
-    // TComponent(){
-    //     RegisterComponent();
-    // }
-
-    // void RegisterComponent(){
-    //     //assert that component hasnt been registered!
-    //     if(Component::componentIndexMap.find(typeid(T).name()) == Component::componentIndexMap.end()){
-    //         Component::componentIndexMap.insert({typeid(T).name(), Component::componentIndexMap.size()});
-    //     }
-    // }
-};
-
-struct Vector
-{
-    float x, y, z, r;
-};
-
-struct MyTransform : public TComponent<MyTransform>
-{
-    Vector position;
-};
-
-struct RigidBody : public TComponent<RigidBody>
-{
-    std::string name;
-    Vector velocity;
-};
+#include "Components/Component.h"
 
 struct GameObject
 {

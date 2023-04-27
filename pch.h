@@ -10,6 +10,7 @@
 #include <bitset>
 #include <unordered_map>
 #include <filesystem>
+#include <chrono>
 
 using Signature = std::bitset<32>;
 
