@@ -14,9 +14,20 @@ class Time
     TimePoint TimeEnd;                                      // Ending Time of Game loop
 
     double accumulatedTime;
+
 public:
     float dt = 1 / 60.f;
     size_t step = 1U;
+
+    Time()
+    {
+        this->dt = 1 / 60.f;
+    }
+
+    Time(float dt)
+    {
+        this->dt = dt;
+    }
 
     float GetDeltaTime() { return this->dt; }
     void SetDeltaTime(float setDt) { this->dt = setDt; }
@@ -26,14 +37,14 @@ public:
         TimeStart = std::chrono::high_resolution_clock::now();
     }
 
-    size_t CalculateTimeSteps(float given_dt)
+    size_t CalculateTimeSteps(float givenFixedDt)
     {
         size_t currentNumberOfSteps = 0;
         deltaTime = std::chrono::duration_cast<Duration>(TimeEnd - TimeStart);
         accumulatedTime += deltaTime.count(); // deltaTime.count() returns number of seconds in type double.
-        while (accumulatedTime >= given_dt)
+        while (accumulatedTime >= givenFixedDt)
         {
-            accumulatedTime -= static_cast<double>(given_dt);
+            accumulatedTime -= static_cast<double>(givenFixedDt);
             currentNumberOfSteps++;
         }
         return currentNumberOfSteps;
@@ -44,15 +55,22 @@ public:
         TimeEnd = std::chrono::high_resolution_clock::now(); // This function gets the current time
     }
 
-    void Update(void (*lambda)()){
+    void CoreUpdate(std::function<void()> lambda)
+    {
         FrameStart();
-        lambda(); //execute user lambda
+        lambda(); // execute user lambda
         FrameEnd();
-        
         this->step = CalculateTimeSteps(this->dt);
     }
 
-
+    void SystemUpdate(float givenFixedDt, std::function<void()> lambda)
+    {
+        size_t steps = CalculateTimeSteps(givenFixedDt);
+        for (size_t i = 0; i < steps; i++)
+        {
+            lambda();
+        }
+    }
 };
 
 #endif /* TIME_H */

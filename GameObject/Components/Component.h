@@ -38,4 +38,22 @@ struct RigidBody : public TComponent<RigidBody>
     Vector velocity;
 };
 
+struct Sprite : public TComponent<Sprite>
+{
+    std::string name;
+};
+
+
+struct SuperGameObject{
+    RigidBody rigidbody;
+};
+
+class Physics{
+    template <typename T = SuperGameObject>
+    void Update(T& object){
+        object.rigidbody;
+    }
+};
+
+
 #endif /* COMPONENT_H */

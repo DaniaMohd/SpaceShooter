@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <filesystem>
 #include <chrono>
+#include <functional>
 
 using Signature = std::bitset<32>;
 
