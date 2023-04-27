@@ -1,6 +1,7 @@
 
 #include "pch.h"
 #include "GameObject/GameObjectManager.h"
+#include "Resource Manager/SpriteManager.h"
 
 using namespace std;
 
@@ -13,6 +14,10 @@ int main()
     InitWindow(screenWidth, screenHeight, "Space Shooters");
     SetTargetFPS(60);
 
+    SpriteManager sm;
+    sm.Init();
+
+    std::cout << sm;
 
     while (WindowShouldClose() == false)
     {
