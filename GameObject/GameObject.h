@@ -6,20 +6,39 @@
 
 struct Component
 {
+    // static inline std::unordered_map<std::string, size_t> componentIndexMap;
+
     virtual ~Component(){};
-
-
-    virtual Component* Clone(){
+    virtual std::shared_ptr<Component> Clone()
+    {
         return nullptr;
     };
+    virtual void RegisterComponent()
+    {
+    }
 };
 
+using ComponentPtr = std::shared_ptr<Component>;
+
 template <typename T>
-struct TComponent : Component{
-    Component* Clone(){
-        T component = *dynamic_cast<T*>(this);
-        return new T(component);
+struct TComponent : Component
+{
+    std::shared_ptr<Component> Clone()
+    {
+        T component = *dynamic_cast<T *>(this);
+        return std::dynamic_pointer_cast<Component>(std::make_shared<T>(component));
     }
+
+    // TComponent(){
+    //     RegisterComponent();
+    // }
+
+    // void RegisterComponent(){
+    //     //assert that component hasnt been registered!
+    //     if(Component::componentIndexMap.find(typeid(T).name()) == Component::componentIndexMap.end()){
+    //         Component::componentIndexMap.insert({typeid(T).name(), Component::componentIndexMap.size()});
+    //     }
+    // }
 };
 
 struct Vector
@@ -34,28 +53,27 @@ struct MyTransform : public TComponent<MyTransform>
 
 struct RigidBody : public TComponent<RigidBody>
 {
-    std::string name = "InitRigidBody";
+    std::string name;
     Vector velocity;
 };
 
 struct GameObject
 {
-    Signature signature;
-    std::vector<Component *> mComponents;
+    std::vector<std::shared_ptr<Component>> mComponents;
 
     template <typename T>
     void AddComponent(T component)
     {
-        T *newComp = new T(component);
-        this->mComponents.push_back(static_cast<Component *>(newComp));
+        std::shared_ptr<T> newComp = std::make_shared<T>(component);
+        this->mComponents.push_back(std::static_pointer_cast<Component>(newComp));
     }
 
     template <typename T>
     bool HasComponent()
     {
-        for (Component *comp : this->mComponents)
+        for (auto comp : this->mComponents)
         {
-            if (dynamic_cast<T *>(comp) != nullptr)
+            if (std::dynamic_pointer_cast<T>(comp) != nullptr)
             {
                 return true;
             }
@@ -66,11 +84,11 @@ struct GameObject
     template <typename T>
     T &GetComponent()
     {
-        for (Component *comp : this->mComponents)
+        for (auto comp : this->mComponents)
         {
-            if (dynamic_cast<T *>(comp) != nullptr)
+            if (std::dynamic_pointer_cast<T>(comp) != nullptr)
             {
-                T *tComp = dynamic_cast<T *>(comp);
+                std::shared_ptr<T> tComp = std::dynamic_pointer_cast<T>(comp);
                 return *tComp;
             }
         }
@@ -79,27 +97,17 @@ struct GameObject
         throw(this);
     }
 
-    GameObject *Clone()
+    std::shared_ptr<GameObject> Clone()
     {
-        GameObject* clone = new GameObject;
+        std::shared_ptr<GameObject> clone = std::make_shared<GameObject>();
 
-        for (Component *comp : this->mComponents)
+        for (auto comp : this->mComponents)
         {
-            Component* clonedComp = comp->Clone();
+            std::shared_ptr<Component> clonedComp = std::static_pointer_cast<Component>(comp.get()->Clone());
             clone->mComponents.push_back(clonedComp);
         }
 
         return clone;
-    }
-
-    ~GameObject()
-    {
-        for (Component *comp : this->mComponents)
-        {
-            delete comp;
-        }
-
-        mComponents.clear();
     }
 };
 

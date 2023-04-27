@@ -8,6 +8,8 @@
 #include <array>
 #include <memory>
 #include <bitset>
+#include <unordered_map>
+#include <filesystem>
 
 using Signature = std::bitset<32>;
 
