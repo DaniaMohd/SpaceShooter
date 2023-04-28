@@ -4,38 +4,25 @@
 #include "pch.h"
 #include "GameObject.h"
 
+template <typename T>
 class GameObjectManager
 {
-    std::vector<std::shared_ptr<GameObject>> allGameObjs;
+    std::vector<T> allTemplatedGameObjs;
 
 public:
-    void AddGameObject(std::shared_ptr<GameObject> gObj)
-    {
-        this->allGameObjs.push_back(gObj);
+    void Init(){
+        
     }
 
-    void InitGameObject(std::function<void (std::shared_ptr<GameObject> gObj)> lambda)
-    {
-        for (auto obj : allGameObjs)
-        {
-            lambda(obj);
+    void Update(){
+        for(T& obj : this->allTemplatedGameObjs){
+            //Apply your systems here
+
         }
     }
 
-    void UpdateGameObject(std::function<void (std::shared_ptr<GameObject> gObj)> lambda)
-    {
-        for (auto obj : allGameObjs)
-        {
-            lambda(obj);
-        }
-    }
+    void Exit(){
 
-    void ExitGameObject(std::function<void (std::shared_ptr<GameObject> gObj)> lambda)
-    {
-        for (auto obj : allGameObjs)
-        {
-            lambda(obj);
-        }
     }
 };
 

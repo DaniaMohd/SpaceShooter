@@ -21,6 +21,16 @@ public:
         }
     }
 
+    Texture2D GetSprite(std::string assetName){
+        auto iterator = this->nameToTexture2D.find(assetName);
+
+        if(iterator != this->nameToTexture2D.end()){
+            return iterator->second;
+        }
+
+        return this->nameToTexture2D.find("Alert.png")->second;
+    }
+
     friend std::ostream& operator<<(std::ostream& os, SpriteManager& sm){
 
         for(auto const& pair : sm.nameToTexture2D){

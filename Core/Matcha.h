@@ -10,10 +10,6 @@
 class MatchaEngine
 {
     Time time;
-    GameObjectManager gObjManager;
-    SystemManager sysManager;
-    SpriteManager sprManager;
-
     int screenWidth = 800;
     int screenHeight = 600;
 
@@ -23,11 +19,7 @@ public:
         InitWindow(screenWidth, screenHeight, "Space Shooters");
         SetTargetFPS(60);
 
-        sprManager.Init();
-
-        gObjManager.InitGameObject([&sysManager = this->sysManager](std::shared_ptr<GameObject> obj){
-            
-        });
+        
     }
 
     void Update()
