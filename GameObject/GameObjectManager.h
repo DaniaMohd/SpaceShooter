@@ -4,6 +4,10 @@
 #include "pch.h"
 #include "GameObject.h"
 
+class GameObject{
+
+};
+
 template <typename T>
 class GameObjectManager
 {
@@ -14,7 +18,7 @@ public:
         
     }
 
-    void Update(){
+    void Update(MatchaEngine& engine){
         for(T& obj : this->allTemplatedGameObjs){
             //Apply your systems here
 
@@ -25,5 +29,14 @@ public:
 
     }
 };
+
+
+class Functor{
+    void operator()(){
+        
+    }
+};
+
+
 
 #endif /* GAMEOBJECTMANAGER_H */

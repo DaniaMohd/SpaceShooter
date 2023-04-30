@@ -12,6 +12,7 @@
 #include <filesystem>
 #include <chrono>
 #include <functional>
+#include <variant>
 
 using Signature = std::bitset<32>;
 
