@@ -3,14 +3,13 @@
 
 #include "pch.h"
 #include "ResourceManager/SpriteManager.h"
+#include "Core/Matcha.h"
+#include "System.h"
 
-class SpriteRenderer{
-
-    template <typename T>
-    void Update(T& gameObj, SpriteManager& spriteManager){
-       Texture2D sprite = spriteManager.GetSprite(gameObj.sprite.name);
-       
-    }
+class SpriteRenderer : public System
+{
+public:
+    void operator()(MatchaEngine &engine);
 };
 
 #endif /* SPRITERENDERER_H */

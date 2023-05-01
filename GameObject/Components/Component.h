@@ -3,22 +3,26 @@
 
 struct Component
 {
-    // static inline std::unordered_map<std::string, size_t> componentIndexMap;
-
+protected:
+    bool isActive = false;
+public:
     virtual ~Component(){};
+
     virtual std::shared_ptr<Component> Clone()
     {
         return nullptr;
     };
-};
 
-template <typename T>
-struct TComponent : Component
-{
-    std::shared_ptr<Component> Clone()
-    {
-        T component = *dynamic_cast<T *>(this);
-        return std::dynamic_pointer_cast<Component>(std::make_shared<T>(component));
+    bool IsActive(){
+        return this->isActive;
+    }
+
+    void SetActive(){
+        this->isActive = true;
+    }
+
+    void UnSetActive(){
+        this->isActive = false;
     }
 };
 
@@ -27,33 +31,25 @@ struct Vector
     float x, y, z, r;
 };
 
-struct MyTransform : public TComponent<MyTransform>
+struct MyTransform : public Component
 {
     Vector position;
 };
 
-struct RigidBody : public TComponent<RigidBody>
+struct RigidBody : public Component
 {
-    std::string name;
     Vector velocity;
 };
 
-struct Sprite : public TComponent<Sprite>
+struct Sprite : public Component
 {
+    enum class Type
+    {
+        SPRITE,
+        SPRITESHEET
+    };
+
     std::string name;
 };
-
-
-struct SuperGameObject{
-    RigidBody rigidbody;
-};
-
-class Physics{
-    template <typename T = SuperGameObject>
-    void Update(T& object){
-        object.rigidbody;
-    }
-};
-
 
 #endif /* COMPONENT_H */

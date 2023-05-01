@@ -21,6 +21,12 @@ public:
         }
     }
 
+    void Exit(){
+        for(auto& pair : this->nameToTexture2D){
+            UnloadTexture(pair.second);
+        }
+    }
+
     Texture2D GetSprite(std::string assetName){
         auto iterator = this->nameToTexture2D.find(assetName);
 

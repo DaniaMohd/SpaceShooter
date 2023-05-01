@@ -4,14 +4,18 @@
 #include "pch.h"
 #include "Components/Component.h"
 
+class MatchaEngine;
 
+struct GameObject
+{
+    Transform transform;
+    RigidBody rigidbody;
+    Sprite sprite;
 
-struct Player{
-
-    void Init(){}
-    void Update(){}
-    void Exit(){}
+    // Add stuff
+    std::function<void(MatchaEngine &, GameObject &)> script;
 };
+
 
 
 #endif /* GAMEOBJECT_H */

@@ -4,39 +4,22 @@
 #include "pch.h"
 #include "GameObject.h"
 
-class GameObject{
-
-};
-
-template <typename T>
 class GameObjectManager
 {
-    std::vector<T> allTemplatedGameObjs;
+    std::vector<GameObject> allGameObjects;
 
 public:
-    void Init(){
-        
+    GameObject &CreateObject()
+    {
+        GameObject obj;
+        this->allGameObjects.push_back(obj);
+        return allGameObjects.back();
     }
 
-    void Update(MatchaEngine& engine){
-        for(T& obj : this->allTemplatedGameObjs){
-            //Apply your systems here
-
-        }
-    }
-
-    void Exit(){
-
+    std::vector<GameObject> &GetAllGameObject()
+    {
+        return this->allGameObjects;
     }
 };
-
-
-class Functor{
-    void operator()(){
-        
-    }
-};
-
-
 
 #endif /* GAMEOBJECTMANAGER_H */

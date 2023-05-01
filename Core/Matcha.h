@@ -6,38 +6,27 @@
 #include "GameObject/GameObjectManager.h"
 #include "Systems/SystemManager.h"
 #include "ResourceManager/SpriteManager.h"
+#include "Systems/SpriteRenderer.h"
+#include "Systems/ScriptManager.h"
 
 class MatchaEngine
 {
-    Time time;
+
     int screenWidth = 800;
     int screenHeight = 600;
 
 public:
-    void Init()
-    {
-        InitWindow(screenWidth, screenHeight, "Space Shooters");
-        SetTargetFPS(60);
+    Time time;
+    GameObjectManager gObjManager;
+    SpriteManager spriteManager;
+    SpriteRenderer spriteRenderer;
+    ScriptSystem scriptManager;
 
-        
-    }
+    MatchaEngine();
 
-    void Update()
-    {
-        while (WindowShouldClose() == false)
-        {
-            BeginDrawing();
-            ClearBackground(BLACK);
-
-            // DrawCircle(ball_x,ball_y,ball_radius, WHITE);
-            EndDrawing();
-        }
-    }
-
-    void Exit()
-    {
-        CloseWindow();
-    }
+    void Init();
+    void Update();
+    void Exit();
 };
 
 #endif /* MATCHA_H */
