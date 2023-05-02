@@ -29,6 +29,6 @@ void MatchaEngine::Update()
 
 void MatchaEngine::Exit()
 {
-    spriteManager.Exit();
-    CloseWindow();
+        spriteManager.Exit();
+        CloseWindow();
 }
